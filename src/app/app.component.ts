@@ -18,13 +18,13 @@ export class AppComponent {
     this.items = fire.collection('users').valueChanges();
 
     this.readAllPosts()
-
     this.getPost()
   }
 
-  deletePost() {
-    this.crudPosts.deletePost("AIUns5d7Sc5asb3Jv3HD").then(success => {
+  deletePost(idPost: any) {
+    this.crudPosts.deletePost(idPost).then(success => {
       console.log("Se ha eliminado correctamente")
+      this.readAllPosts()
     }).catch(error => {
       console.error("Problema eliminando")
     })
@@ -56,6 +56,8 @@ export class AppComponent {
   readAllPosts() {
     this.crudPosts.readAllPost().subscribe( data => {
 
+      this.misPosts = []
+
       data.forEach( (doc: any) => {
 
         let myPost: Post = doc.data()
@@ -65,11 +67,15 @@ export class AppComponent {
 
       })
 
+      this.isLoading = false
+
     })
   }
 
+  isLoading = false
+
   createPost() {
-    console.log("DALE")
+    this.isLoading = true
 
     const publicacion: Post = {
       author: "mWjtPSwuTmQ13g1dg5Ic",
@@ -80,6 +86,7 @@ export class AppComponent {
 
     this.crudPosts.newPost(publicacion).then( success => {
       console.log("To' ok!")
+      this.readAllPosts()
     }).catch(error => {
       console.error("Algo ha ido mal colega")
     })

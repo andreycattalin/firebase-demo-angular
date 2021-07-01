@@ -1,18 +1,29 @@
 <div class="container mt-4">
     <div class="row">
-        <div class="col-4">
+        <!-- <div class="col-4">
             <ul class="list-group">
                 <li *ngFor="let item of items | async" class="list-group-item">
                     {{item.nombre}} - {{item.edad}}
                 </li>
             </ul>
-        </div>
+        </div> -->
 
 
         <div class="col-8">
             <ul class="list-group">
                 <li *ngFor="let item of misPosts" class="list-group-item">
-                    {{item.id}} - {{item.title}}
+
+                    <div class="row">
+                        <div class="col-6">
+                            {{item.title}}
+                        </div>
+
+                        <div class="col-6">
+                            <button type="button" (click)="deletePost(item.id)" class="btn btn-danger">Eliminar post</button>
+                        </div>
+                    </div>
+
+
                 </li>
             </ul>
         </div>
@@ -24,13 +35,17 @@
 <div class="container mt-4">
     <div class="row">
         <div class="col">
-            <button type="button" (click)="createPost()" class="btn btn-primary">Crear post</button>
+            <button [ngClass]="{'disabled': isLoading}" type="button" (click)="createPost()" class="btn btn-primary">Crear post
+              <div *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </button>
         </div>
-        <div class="col">
+        <!-- <div class="col">
             <button type="button" (click)="updatePost()" class="btn btn-warning">Actualizar</button>
         </div>
         <div class="col">
             <button type="button" (click)="deletePost()" class="btn btn-danger">Eliminar post</button>
-        </div>
+        </div> -->
     </div>
 </div>
